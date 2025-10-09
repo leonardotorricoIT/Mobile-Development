@@ -1,10 +1,10 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Home from './src/screens/Home/Home';
+import Movies from './src/screens/Movie/Movies';
 
 function App() {
   return (
     <SafeAreaProvider>
-      <Home />
+      <Movies />
     </SafeAreaProvider>
   );
 }
