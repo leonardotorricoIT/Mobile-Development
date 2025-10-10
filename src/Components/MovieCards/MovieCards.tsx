@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
-import { getPopularMovies } from '../../service/TMDBService';
+import { getMoviesByGenre, getPopularMovies } from '../../service/TMDBService';
 import { styles } from './style';
 import { TMDB_IMAGE_BASE_URL } from '@env';
 
 interface MovieCardsProps {
   title: string;
-  genre?: number | null;
+  genreId: number;
+  type?: 'genre';
 }
 
-export default function MovieCards({ title, genre }: MovieCardsProps) {
+export default function MovieCards({
+  title,
+  genreId,
+  type = 'genre',
+}: MovieCardsProps) {
   const [movies, setMovies] = useState<any[]>([]);
 
   useEffect(() => {
     (async () => {
       try {
-        const data = await getPopularMovies();
-        const filtered = genre
-          ? data.filter((movie: any) => movie.genre_ids.includes(genre))
-          : data;
-        setMovies(filtered.slice(0, 10));
+        const data = await getMoviesByGenre(genreId);
+        setMovies(data ? data.slice(0, 10) : []);
       } catch (err) {
         console.log('Error:', err);
       }
     })();
-  }, [genre]);
+  }, [genreId, type]);
 
   return (
     <View style={styles.container}>

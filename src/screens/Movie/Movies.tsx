@@ -31,9 +31,9 @@ const Movies = () => {
         </View>
       </View>
 
-      <MovieCards title="Marvel studios" />
-      <MovieCards title="Trending Now" />
-      <MovieCards title="Top Rated" />
+      <MovieCards title="Action" genreId={28} type="genre" />
+      <MovieCards title="Comedy" genreId={35} type="genre" />
+      <MovieCards title="Horror" genreId={27} type="genre" />
     </ScrollView>
   );
 };
