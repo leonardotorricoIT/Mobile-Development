@@ -20,3 +20,13 @@ export const getPopularMovies = async (page: number = 1) => {
     throw error;
   }
 };
+
+export async function getGenres() {
+  try {
+    const response = await api.get('/genre/movie/list');
+    return response.data.genres;
+  } catch (error) {
+    console.error('Error fetching genres:', error);
+    throw error;
+  }
+}
