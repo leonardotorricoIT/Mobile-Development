@@ -21,6 +21,7 @@ export default function GenreNavbar({
     (async () => {
       try {
         const data = await getGenres();
+        console.log(data);
         setGenres(data);
       } catch (err) {
         console.log('Error:', err);

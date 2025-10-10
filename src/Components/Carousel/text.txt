@@ -1,0 +1,287 @@
+Api
+
+William Barra
+8:39 a.m.
+https://developer.themoviedb.org/docs/image-basics
+
+William Barra
+8:42 a.m.
+https://image.tmdb.org/t/p/original
+
+William Barra
+8:45 a.m.
+import { Image } from 'react-native';
+import { styles } from './styles';
+import { TMDB_IMAGE_BASE_URL } from '@env';
+
+interface MovieCardProps {
+  posterPath: string;
+}
+
+export const MovieCard = ({ posterPath }: MovieCardProps) => {
+  const imageUrl = `${TMDB_IMAGE_BASE_URL}${posterPath}`;
+
+  return (
+    <Image
+      source={{ uri: imageUrl }}
+      style={styles.poster}
+      resizeMode="cover"
+    />
+  );
+};
+
+William Barra
+8:46 a.m.
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
+
+export const styles = StyleSheet.create({
+  poster: {
+    width: width,
+    height: height * 0.65,
+  },
+});
+
+William Barra
+8:51 a.m.
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+  vote_average: number;
+  release_date: string;
+}
+
+William Barra
+9:02 a.m.
+export const colors = {
+  // Primary colors
+  primary: '#FFC107',
+  primaryDark: '#FFA000',
+
+  // Background colors
+  background: '#000',
+  backgroundLight: '#1A1A1A',
+
+  // Text colors
+  textPrimary: '#FFFFFF',
+  textSecondary: '#B3B3B3',
+  textDark: '#000000',
+
+  // Button colors
+  buttonPrimary: '#FFC107',
+  buttonSecondary: 'rgba(255, 255, 255, 0.2)',
+
+  // Other colors
+  white: '#FFFFFF',
+  black: '#000000',
+  transparent: 'transparent',
+};
+
+William Barra
+9:04 a.m.
+import { Text, TextStyle } from 'react-native';
+import { styles } from './styles';
+
+interface DATextProps {
+  children: string | React.ReactNode;
+  variant?: 'title' | 'subtitle' | 'body';
+  style?: TextStyle;
+  numberOfLines?: number;
+}
+
+export const DAText = ({
+  children,
+  variant = 'body',
+  style,
+  numberOfLines
+}: DATextProps) => {
+  const getVariantStyle = () => {
+    switch (variant) {
+      case 'title':
+        return styles.title;
+      case 'subtitle':
+        return styles.subtitle;
+      case 'body':
+      default:
+        return styles.body;
+    }
+  };
+
+  return (
+    <Text
+      style={[styles.base, getVariantStyle(), style]}
+      numberOfLines={numberOfLines}
+    >
+      {children}
+    </Text>
+  );
+};
+
+William Barra
+9:05 a.m.
+import { StyleSheet } from 'react-native';
+import { colors } from '../../../constants';
+
+export const styles = StyleSheet.create({
+  base: {
+    color: colors.textPrimary,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    lineHeight: 32,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    lineHeight: 24,
+  },
+  body: {
+    fontSize: 14,
+    fontWeight: '400',
+    lineHeight: 20,
+  },
+});
+
+William Barra
+9:09 a.m.
+import { TouchableOpacity } from 'react-native';
+import { styles } from './styles';
+import { DAText } from '../DAText';
+
+interface DAButtonProps {
+  title: string;
+  onPress: () => void;
+  variant?: 'primary' | 'secondary';
+  disabled?: boolean;
+}
+
+export const DAButton = ({
+  title,
+  onPress,
+  variant = 'primary',
+  disabled = false
+}: DAButtonProps) => {
+  return (
+    <TouchableOpacity
+      style={[
+        styles.button,
+        variant === 'primary' ? styles.primary : styles.secondary,
+        disabled && styles.disabled,
+      ]}
+      onPress={onPress}
+      disabled={disabled}
+      activeOpacity={0.7}
+    >
+      <DAText
+        style={variant === 'primary' ? styles.primaryText : styles.secondaryText}
+      >
+        {title}
+      </DAText>
+    </TouchableOpacity>
+  );
+};
+
+William Barra
+9:13 a.m.
+estilosd e moies.tsx
+
+import { StyleSheet, Dimensions } from 'react-native';
+import { colors } from '../../constants';
+
+const { height } = Dimensions.get('window');
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.background,
+  },
+  gradient: {
+    position: 'absolute',
+    bottom: height * 0.3,
+    left: 0,
+    right: 0,
+    height: 150,
+    justifyContent: 'flex-end',
+    paddingBottom: 20,
+  },
+  overlay: {
+    paddingHorizontal: 24,
+  },
+  textRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 16,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 12,
+  },
+});
+
+William Barra
+9:15 a.m.
+<View style={styles.overlay}>
+          <View style={styles.textRow}>
+            <DAText variant="subtitle">My list</DAText>
+            <DAText variant="subtitle">Discover</DAText>
+          </View>
+
+          <View style={styles.buttonRow}>
+            <DAButton
+              title="+ Wishlist"
+              variant="secondary"
+              onPress={() => console.log('Wishlist pressed')}
+            />
+            <DAButton
+              title="Details"
+              variant="primary"
+              onPress={() => console.log('Details pressed')}
+            />
+          </View>
+        </View>
+
+William Barra
+9:17 a.m.
+import { StyleSheet } from 'react-native';
+import { colors } from '../../../constants';
+
+export const styles = StyleSheet.create({
+  button: {
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  primary: {
+    backgroundColor: colors.buttonPrimary,
+  },
+  secondary: {
+    backgroundColor: colors.buttonSecondary,
+  },
+  disabled: {
+    opacity: 0.5,
+  },
+  primaryText: {
+    color: colors.textDark,
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  secondaryText: {
+    color: colors.textPrimary,
+    fontSize: 16,
+    fontWeight: '700',
+  },
+
+});

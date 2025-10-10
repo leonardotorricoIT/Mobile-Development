@@ -21,15 +21,40 @@ export const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
   },
+  gradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '60%',
+  },
   content: {
     width: '100%',
-    backgroundColor: 'rgba(0,0,0,0.6)',
     paddingVertical: 10,
+    zIndex: 1,
   },
   text: {
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  // Estilos de paginación
+  pagination: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+    gap: 8,
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#666',
+  },
+  paginationDotActive: {
+    backgroundColor: '#fff',
+    width: 24,
   },
 });

@@ -2,13 +2,16 @@ import React, { useEffect, useState, useRef } from 'react';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { useSharedValue } from 'react-native-reanimated';
 import { Dimensions, Text, View, Image } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { getPopularMovies } from '../../service/TMDBService';
 import { styles } from './style';
+import { TMDB_IMAGE_BASE_URL } from '@env';
 
 const width = Dimensions.get('window').width;
 
 export default function CarouselMovies() {
   const [movies, setMovies] = useState<any[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const ref = useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
 
@@ -39,14 +42,19 @@ export default function CarouselMovies() {
         height={width * 1.2}
         data={movies}
         onProgressChange={progress}
+        onSnapToItem={index => setActiveIndex(index)}
         renderItem={({ item }) => (
           <View style={styles.carousel}>
             <Image
               source={{
-                uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+                uri: `${TMDB_IMAGE_BASE_URL}${item.poster_path}`,
               }}
               style={styles.image}
               resizeMode="cover"
+            />
+            <LinearGradient
+              colors={['transparent', 'rgba(0,0,0,0.4)', 'rgba(0,0,0,0.9)']}
+              style={styles.gradient}
             />
             <View style={styles.content}>
               <Text style={styles.text}>{item.title}</Text>
@@ -54,6 +62,18 @@ export default function CarouselMovies() {
           </View>
         )}
       />
+
+      <View style={styles.pagination}>
+        {movies.slice(0, 5).map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.paginationDot,
+              activeIndex === index && styles.paginationDotActive,
+            ]}
+          />
+        ))}
+      </View>
     </View>
   );
 }
