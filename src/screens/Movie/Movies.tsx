@@ -13,19 +13,20 @@ const Movies = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <View>
+      <View style={styles.carouselContainer}>
         <CarouselMovies />
         <SafeAreaView
           style={{
             position: 'absolute',
             top: insets.top,
             width: '100%',
-            zIndex: 2,
+            zIndex: 3,
           }}
         >
           <GenreNavbar onSelectGenre={setSelectedGenre} />
         </SafeAreaView>
-        <View>
+
+        <View style={styles.buttonsOverlay}>
           <Buttons />
         </View>
       </View>

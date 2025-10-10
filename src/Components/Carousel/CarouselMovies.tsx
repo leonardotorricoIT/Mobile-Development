@@ -19,7 +19,7 @@ export default function CarouselMovies() {
     (async () => {
       try {
         const data = await getPopularMovies();
-        setMovies(data);
+        setMovies(data.slice(0, 5));
       } catch (err) {
         console.log('Error:', err);
       }
@@ -56,15 +56,12 @@ export default function CarouselMovies() {
               colors={['transparent', 'rgba(0,0,0,0.4)', 'rgba(0,0,0,0.9)']}
               style={styles.gradient}
             />
-            <View style={styles.content}>
-              <Text style={styles.text}>{item.title}</Text>
-            </View>
           </View>
         )}
       />
 
       <View style={styles.pagination}>
-        {movies.slice(0, 5).map((_, index) => (
+        {movies.map((_, index) => (
           <View
             key={index}
             style={[

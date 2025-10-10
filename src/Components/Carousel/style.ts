@@ -39,12 +39,12 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
   },
-  // Estilos de paginación
   pagination: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,
+    marginBottom: 8,
     gap: 8,
   },
   paginationDot: {

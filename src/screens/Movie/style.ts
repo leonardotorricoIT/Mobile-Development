@@ -5,6 +5,15 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1a1a1a',
   },
+  carouselContainer: {
+    position: 'relative',
+  },
+  buttonsOverlay: {
+    position: 'absolute',
+    bottom: 60,
+    width: '100%',
+    zIndex: 2,
+  },
   header: {
     backgroundColor: '#007AFF',
     paddingVertical: 16,

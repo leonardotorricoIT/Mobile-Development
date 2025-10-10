@@ -6,7 +6,7 @@ import { TMDB_IMAGE_BASE_URL } from '@env';
 
 interface MovieCardsProps {
   title: string;
-  genre?: number;
+  genre?: number | null;
 }
 
 export default function MovieCards({ title, genre }: MovieCardsProps) {
