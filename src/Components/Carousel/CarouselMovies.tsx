@@ -36,7 +36,7 @@ export default function CarouselMovies() {
       <Carousel
         ref={ref}
         width={width}
-        height={width * 0.8}
+        height={width}
         data={movies}
         onProgressChange={progress}
         renderItem={({ item }) => (
